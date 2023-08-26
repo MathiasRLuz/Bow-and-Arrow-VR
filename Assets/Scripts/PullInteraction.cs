@@ -4,16 +4,17 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class PullInteraction : XRBaseInteractable {
     public static event Action<float> OnPullActionReleased;
-    [SerializeField] private Transform start, end;
-    [SerializeField] private GameObject notch;
+    [SerializeField] private Transform start, end, notch;    
     public float pullAmount { get; private set; } = 0.0f;
     private LineRenderer _lineRenderer;
     private IXRSelectInteractor _pullingInteractor = null;
     private AudioSource _audioSource;
+    private Vector3 _oldNotchPos;
     protected override void Awake() {
         base.Awake();
         _lineRenderer = GetComponent<LineRenderer>();
         _audioSource = GetComponent<AudioSource>();
+        _oldNotchPos = notch.localPosition;
     }
 
     public void SetPullInteractor(SelectEnterEventArgs args) {
@@ -23,9 +24,8 @@ public class PullInteraction : XRBaseInteractable {
     public void Release() {
         OnPullActionReleased?.Invoke(pullAmount);
         _pullingInteractor = null;
-        pullAmount = 0;
-        Vector3 oldNotchPos = notch.transform.position;
-        notch.transform.localPosition = new Vector3(oldNotchPos.x, oldNotchPos.y, 0);
+        pullAmount = 0;        
+        notch.localPosition = new Vector3(_oldNotchPos.x, _oldNotchPos.y, 0);
         UpdateString();
         PlayReleaseSound();
     }
@@ -64,7 +64,7 @@ public class PullInteraction : XRBaseInteractable {
 
     private void UpdateString() {
         Vector3 linePosition = Vector3.forward * Mathf.Lerp(start.localPosition.z, end.localPosition.z, pullAmount);
-        notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, linePosition.z + 0.2f);
+        notch.localPosition = new Vector3(notch.localPosition.x, notch.localPosition.y, linePosition.z + 0.2f);
         _lineRenderer.SetPosition(1, linePosition);
     }
 }

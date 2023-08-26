@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ArrowSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject arrow;
-    [SerializeField] private GameObject notch;
+    [SerializeField] private Transform notch;
     private XRGrabInteractable _bow;
     private bool _arrowNotched = false;
     private GameObject _currentArrow = null;
@@ -29,7 +29,7 @@ public class ArrowSpawner : MonoBehaviour
 
     private IEnumerator DelaySpawn() {
         yield return new WaitForSeconds(1f);
-        _currentArrow = Instantiate(arrow, notch.transform);
+        _currentArrow = Instantiate(arrow, notch);
     }
 
     private void Update() {
