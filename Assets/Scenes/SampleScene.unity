@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 163173195}
   - component: {fileID: 163173194}
   - component: {fileID: 163173193}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 178544645}
   - component: {fileID: 178544646}
   - component: {fileID: 178544647}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Right Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1200,7 +1200,7 @@ GameObject:
   - component: {fileID: 468214080}
   - component: {fileID: 468214081}
   - component: {fileID: 468214082}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Left Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1561,7 +1561,7 @@ GameObject:
   m_Component:
   - component: {fileID: 566898218}
   - component: {fileID: 566898217}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Locomotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1737,6 +1737,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1779907023}
+    - targetCorrespondingSourceObject: {fileID: 3701202431252008202, guid: 1b6d9920203cf204ca025db14635a195,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1779907024}
   m_SourcePrefab: {fileID: 100100000, guid: 1b6d9920203cf204ca025db14635a195, type: 3}
 --- !u!4 &1020529339 stripped
 Transform:
@@ -1759,7 +1763,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1347356548}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera Offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1794,7 +1798,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1361578298}
   - component: {fileID: 1361578297}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2175,6 +2179,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.41432068, y: 0.058014736, z: 0.04487438}
   m_Center: {x: 0.009909102, y: 0.0012198517, z: -0.008725822}
+--- !u!114 &1779907024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779907019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce559113b17338f4ea62960b6af74775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrow: {fileID: 1769337597633466025, guid: 54ba44d4ecd83324991be29cf49b127d, type: 3}
+  notch: {fileID: 1236397507}
 --- !u!1 &1831239980
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,7 +2206,7 @@ GameObject:
   - component: {fileID: 1831239983}
   - component: {fileID: 1831239982}
   - component: {fileID: 1831239981}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2296,6 +2314,7 @@ GameObject:
   - component: {fileID: 2019979616}
   - component: {fileID: 2019979615}
   - component: {fileID: 2019979614}
+  - component: {fileID: 2019979618}
   m_Layer: 0
   m_Name: Table
   m_TagString: Untagged
@@ -2389,6 +2408,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2019979618
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019979613}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2045999770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2045999771}
   - component: {fileID: 2045999772}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turn
   m_TagString: Untagged
   m_Icon: {fileID: 0}

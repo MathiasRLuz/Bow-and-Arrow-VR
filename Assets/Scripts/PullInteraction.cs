@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class PullInteraction : XRBaseInteractable {
-    public static event Action<float> PullActionReleased;
+    public static event Action<float> OnPullActionReleased;
     [SerializeField] private Transform start, end;
     [SerializeField] private GameObject notch;
     public float pullAmount { get; private set; } = 0.0f;
@@ -20,7 +20,7 @@ public class PullInteraction : XRBaseInteractable {
     }
 
     public void Release() {
-        PullActionReleased?.Invoke(pullAmount);
+        OnPullActionReleased?.Invoke(pullAmount);
         pullingInteractor = null;
         pullAmount = 0;
         Vector3 oldNotchPos = notch.transform.position;
