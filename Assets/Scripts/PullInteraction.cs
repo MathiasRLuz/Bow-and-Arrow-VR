@@ -8,34 +8,48 @@ public class PullInteraction : XRBaseInteractable {
     [SerializeField] private GameObject notch;
     public float pullAmount { get; private set; } = 0.0f;
     private LineRenderer _lineRenderer;
-    private IXRSelectInteractor pullingInteractor = null;
-
+    private IXRSelectInteractor _pullingInteractor = null;
+    private AudioSource _audioSource;
     protected override void Awake() {
         base.Awake();
         _lineRenderer = GetComponent<LineRenderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void SetPullInteractor(SelectEnterEventArgs args) {
-        pullingInteractor = args.interactorObject;
+        _pullingInteractor = args.interactorObject;
     }
 
     public void Release() {
         OnPullActionReleased?.Invoke(pullAmount);
-        pullingInteractor = null;
+        _pullingInteractor = null;
         pullAmount = 0;
         Vector3 oldNotchPos = notch.transform.position;
         notch.transform.localPosition = new Vector3(oldNotchPos.x, oldNotchPos.y, 0);
         UpdateString();
+        PlayReleaseSound();
+    }
+
+    private void PlayReleaseSound() {
+        _audioSource.Play();
     }
 
     public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase) {
         base.ProcessInteractable(updatePhase);
         if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic) {
             if (isSelected) {
-                Vector3 pullPosition = pullingInteractor.transform.position;
+                Vector3 pullPosition = _pullingInteractor.transform.position;
                 pullAmount = CalculatePull(pullPosition);
                 UpdateString();
+                HapticFeedback();
             }
+        }
+    }
+
+    private void HapticFeedback() {
+        if (_pullingInteractor != null) {
+            ActionBasedController currentController = _pullingInteractor.transform.GetComponent<ActionBasedController>();
+            currentController.SendHapticImpulse(pullAmount, .1f);
         }
     }
 

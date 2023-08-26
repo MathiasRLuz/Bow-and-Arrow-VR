@@ -9,11 +9,11 @@ public class Arrow : MonoBehaviour
     private Rigidbody _rigidbody;
     private bool _inAir = false;
     private Vector3 _lastPosition = Vector3.zero;
-
+    private AudioSource _audioSource;
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
-        Stop();
-        Debug.Log(layer.value);
+        _audioSource = GetComponent<AudioSource>();
+        Stop();        
     }
 
     private void Stop() {
@@ -63,10 +63,15 @@ public class Arrow : MonoBehaviour
                     _rigidbody.interpolation = RigidbodyInterpolation.None;
                     transform.parent = hitInfo.transform;
                     body.AddForce(_rigidbody.velocity, ForceMode.Impulse);
+                    PlaySoundOnHit();
                 }
                 Stop();
             }
         }
+    }
+
+    private void PlaySoundOnHit() {
+        _audioSource.Play();
     }
 
     private void SetPhysics(bool usePhysics) {
