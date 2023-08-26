@@ -62,12 +62,24 @@ public class Arrow : MonoBehaviour
                 if (hitInfo.transform.TryGetComponent(out Rigidbody body)) {
                     _rigidbody.interpolation = RigidbodyInterpolation.None;
                     transform.parent = hitInfo.transform;
-                    body.AddForce(_rigidbody.velocity, ForceMode.Impulse);
+                    body.AddForce(_rigidbody.velocity, ForceMode.Impulse);                    
                     PlaySoundOnHit();
                 }
+                CheckTarget(hitInfo);
                 Stop();
             }
         }
+    }
+
+    private void CheckTarget(RaycastHit hitInfo) {
+        GameObject hitGO = hitInfo.collider.gameObject;
+        if (hitGO.layer == 6) {
+            Debug.Log(CalculateDistanceFromTargetCenter(hitGO.transform.position));
+        }
+    }
+
+    private float CalculateDistanceFromTargetCenter(Vector3 targetCenter) {
+        return Vector3.Distance(tip.position, targetCenter);
     }
 
     private void PlaySoundOnHit() {
