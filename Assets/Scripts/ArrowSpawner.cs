@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class ArrowSpawner : MonoBehaviour
-{
+{    
     [SerializeField] private GameObject arrow;
     [SerializeField] private Transform notch;
     private XRGrabInteractable _bow;

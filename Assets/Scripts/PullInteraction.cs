@@ -4,6 +4,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class PullInteraction : XRBaseInteractable {
     public static event Action<float> OnPullActionReleased;
+    public static event Action<int> OnTotalArrowsUpdated;
+    public static event Action OnArrowsFinished;
+    [SerializeField] private int totalArrows = 10;
     [SerializeField] private Transform start, end, notch;    
     public float pullAmount { get; private set; } = 0.0f;
     private LineRenderer _lineRenderer;
@@ -22,12 +25,21 @@ public class PullInteraction : XRBaseInteractable {
     }
 
     public void Release() {
+        PlayReleaseSound();
         OnPullActionReleased?.Invoke(pullAmount);
         _pullingInteractor = null;
         pullAmount = 0;        
-        notch.localPosition = new Vector3(_oldNotchPos.x, _oldNotchPos.y, 0);
-        UpdateString();
-        PlayReleaseSound();
+        notch.localPosition = new Vector3(_oldNotchPos.x, _oldNotchPos.y, 0);        
+        UpdateString();        
+        CheckIfLastArrow();
+    }
+
+    private void CheckIfLastArrow() {
+        totalArrows--;
+        OnTotalArrowsUpdated?.Invoke(totalArrows);
+        if (totalArrows < 1) {
+            OnArrowsFinished?.Invoke();
+        }
     }
 
     private void PlayReleaseSound() {

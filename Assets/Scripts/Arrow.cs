@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
-
+using System;
 public class Arrow : MonoBehaviour
 {
+    public static event Action<int> OnPointsAdded;
     [SerializeField] private float speed = 10f;
+    [SerializeField] private int maxPoint = 25;
     [SerializeField] private Transform tip;
     [SerializeField] private LayerMask layer;
     private Rigidbody _rigidbody;
@@ -74,12 +76,66 @@ public class Arrow : MonoBehaviour
     private void CheckTarget(RaycastHit hitInfo) {
         GameObject hitGO = hitInfo.collider.gameObject;
         if (hitGO.layer == 6) {
-            Debug.Log(CalculateDistanceFromTargetCenter(hitGO.transform.position));
+            int points = CalculatePoints(CalculateDistanceFromTargetCenter(hitGO.transform.position));
+            Debug.Log(points);
+            AddPoints(points);
         }
     }
 
     private float CalculateDistanceFromTargetCenter(Vector3 targetCenter) {
-        return Vector3.Distance(tip.position, targetCenter);
+        float distance = Vector3.Distance(tip.position, targetCenter);
+        Debug.Log($"targetCenter {targetCenter} - tipPosition {tip.position} - distance {distance}");
+        return distance;
+    }
+
+    private int CalculatePoints(float distance) {       
+        if (distance > 0.15f) { // 10
+            if (distance > 0.21f) { // 9
+                if (distance > 0.3f) { // 8
+                    if (distance > 0.4f) { // 7 
+                        if (distance > 0.53f) { // 6
+                            if (distance > 0.63f) { // 5
+                                if (distance > 0.75f) { // 4
+                                    if (distance > 0.89f) { // 3
+                                        if (distance > 1.05f) { // 2
+                                            if (distance > 1.2f) { // 1
+                                                return 1;
+                                            } else {
+                                                return 2;
+                                            }
+                                        } else {
+                                            return 3;
+                                        }
+                                    } else {
+                                        return 4;
+                                    }
+                                } else {
+                                    return 5;
+                                }
+                            } else {
+                                return 6;
+                            }
+                        } else {
+                            return 7;
+                        }
+                    } else {
+                        return 8;
+                    }
+                } else {
+                    return 9;
+                }
+            } else {
+                return 10;
+            }
+        } else {
+            return maxPoint;
+        }            
+    }
+
+    private void AddPoints(int points) {
+        if (points > 0) {
+            OnPointsAdded?.Invoke(points);
+        }
     }
 
     private void PlaySoundOnHit() {
